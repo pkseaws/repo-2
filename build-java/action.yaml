@@ -19,3 +19,4 @@ runs:
     - name: Build Java Project (Maven)
       run: |
         mvn clean install
+      shell: bash
