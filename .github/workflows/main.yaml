@@ -1,22 +1,24 @@
 name: Multi-Language App CI/CD
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'java/**'
-      - 'python/**'
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'java/**'
-      - 'python/**'
+  workflow_dispatch:
+  
+  #push:
+   # branches:
+    #  - main
+    #paths:
+     # - 'java/**'
+      #- 'python/**'
+  #pull_request:
+   # branches:
+    #  - main
+    #paths:
+    #  - 'java/**'
+    #  - 'python/**'
 
 jobs:
   call-reusable-workflow:
-    uses: enterprise-cicd-pipeline/.github/workflows/unified-build-deployment.yaml@main
+    uses: pkseaws/repo-1/.github/workflows/unified-build-deployment.yaml@main
     with:
       language: ${{ matrix.language }}
       env: ${{ matrix.env }}
