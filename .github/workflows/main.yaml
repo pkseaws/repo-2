@@ -1,33 +1,37 @@
-name: Multi-Language App CI/CD
+# repo-2/.github/workflows/main-build-deploy.yaml
+name: Main Build & Deploy
 
 on:
   workflow_dispatch:
-  
-  #push:
-   # branches:
-    #  - main
-    #paths:
-     # - 'java/**'
-      #- 'python/**'
-  #pull_request:
-   # branches:
-    #  - main
-    #paths:
-    #  - 'java/**'
-    #  - 'python/**'
+    inputs:
+      language:
+        description: 'Language to build'
+        required: true
+        type: choice
+        options:
+          - java
+          - python
+      env:
+        description: 'Environment'
+        required: true
+        type: choice
+        options:
+          - dev
+          - stage
+          - prod
+      upload_artifact:
+        description: 'Upload Artifact?'
+        required: false
+        default: 'false'
+        type: boolean
 
 jobs:
   call-reusable-workflow:
-    uses: pkseaws/repo-1/.github/workflows/unified-build-deployment.yaml@main
+    uses: org-or-user/repo-1/.github/workflows/unified-build-deployment.yaml@main
     with:
-      language: ${{ matrix.language }}
-      env: ${{ matrix.env }}
-      upload_artifact: ${{ matrix.upload_artifact }}
-
-  matrix:
-    strategy:
-      matrix:
-        language: [java, python]
-        env: [dev, stage, prod]
-        upload_artifact: [true, false]
-    fail-fast: false
+      language: ${{ inputs.language }}
+      env: ${{ inputs.env }}
+      upload_artifact: ${{ inputs.upload_artifact }}
+    secrets:
+      OIDC_TOKEN: ${{ secrets.OIDC_TOKEN }}
+      CUSTOM_SECRET: ${{ secrets.CUSTOM_SECRET }}
