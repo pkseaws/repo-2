@@ -27,11 +27,9 @@ on:
 
 jobs:
   call-reusable-workflow:
-    uses: org-or-user/repo-1/.github/workflows/unified-build-deployment.yaml@main
+    uses: pkseaws/repo-1/.github/workflows/unified-build-deployment.yaml@main
     with:
       language: ${{ inputs.language }}
       env: ${{ inputs.env }}
       upload_artifact: ${{ inputs.upload_artifact }}
-    secrets:
-      OIDC_TOKEN: ${{ secrets.OIDC_TOKEN }}
-      CUSTOM_SECRET: ${{ secrets.CUSTOM_SECRET }}
+    
