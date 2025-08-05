@@ -1,0 +1,21 @@
+name: Build Java Application
+
+description: |
+  This composite action will build a Java project using Maven or Gradle.
+
+inputs:
+  version:
+    description: 'Java version to use'
+    required: true
+    default: '11'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: ${{ inputs.version }}
+    - name: Build Java Project (Maven)
+      run: |
+        mvn clean install
