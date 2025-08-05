@@ -1,0 +1,31 @@
+name: Multi-Language App CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'java/**'
+      - 'python/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'java/**'
+      - 'python/**'
+
+jobs:
+  call-reusable-workflow:
+    uses: enterprise-cicd-pipeline/.github/workflows/unified-build-deployment.yaml@main
+    with:
+      language: ${{ matrix.language }}
+      env: ${{ matrix.env }}
+      upload_artifact: ${{ matrix.upload_artifact }}
+
+  matrix:
+    strategy:
+      matrix:
+        language: [java, python]
+        env: [dev, stage, prod]
+        upload_artifact: [true, false]
+    fail-fast: false
